@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>
+:root{
+  --paper:oklch(0.983 0.004 85); --card:#fff;
+  --ink:oklch(0.24 0.014 65); --ink2:oklch(0.44 0.012 65); --muted:oklch(0.585 0.010 65);
+  --rule:oklch(0.905 0.006 75); --ruleS:oklch(0.815 0.008 75);
+  --accent:oklch(0.45 0.095 248); --accentS:oklch(0.962 0.018 248);
+  --false:oklch(0.505 0.135 27); --true:oklch(0.455 0.095 168);
+  --sans:"Libre Franklin","Helvetica Neue",Arial,sans-serif;
+  --serif:Newsreader,Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:640px;margin:0 auto;padding:54px 20px 90px}
+.topbar{max-width:640px;margin:0 auto;padding:54px 20px 0;display:flex;align-items:center;justify-content:space-between}
+.step{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bars{display:flex;gap:6px}
+.bars i{width:28px;height:2px;background:var(--rule);display:block}
+.bars i.on{background:var(--ink)}
+h1{font-family:var(--serif);font-size:29px;line-height:1.28;font-weight:500;margin-bottom:18px;letter-spacing:-.01em}
+p{font-size:15.5px;line-height:1.68;color:var(--ink2);margin-bottom:16px;max-width:64ch}
+p.tight{margin-bottom:10px}
+ol{margin:0 0 18px 20px}
+li{font-size:15.5px;line-height:1.68;color:var(--ink2);margin-bottom:8px}
+.lead{font-size:16.5px;color:var(--ink)}
+.small{font-size:13.5px;color:var(--muted);line-height:1.6}
+hr{border:none;height:1px;background:var(--rule);margin:30px 0}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:22px 24px;margin-bottom:22px}
+.panel p:last-child{margin-bottom:0}
+
+figure{background:var(--card);border:1px solid var(--rule);border-radius:10px;overflow:hidden;
+  box-shadow:0 1px 2px oklch(0.24 0.014 65/.04),0 8px 24px oklch(0.24 0.014 65/.05);margin-bottom:22px}
+figure img{display:block;width:100%;height:auto}
+figcaption{padding:26px 30px 30px;font-family:var(--serif);font-size:23px;line-height:1.42;color:var(--ink);text-wrap:pretty}
+
+.labels{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:8px;overflow:hidden;margin-bottom:22px}
+.lrow{display:flex;align-items:center;gap:12px;padding:15px 20px;background:var(--card)}
+.lrow .t{flex-grow:1;font-size:14.5px;color:var(--ink2)}
+.chip{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);
+  background:var(--paper);border:1px solid var(--ruleS);border-radius:4px;padding:5px 13px}
+
+.q{margin-bottom:30px}
+.q .stem{font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--ink);margin-bottom:20px}
+.opts{display:grid;gap:12px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.three{grid-template-columns:repeat(3,1fr)}
+.opts.four{grid-template-columns:repeat(4,1fr)}
+.opt{display:flex;align-items:center;gap:14px;min-height:62px;padding:14px 20px;background:var(--card);
+  border:1px solid var(--ruleS);border-radius:8px;cursor:pointer;font-size:15.5px;color:var(--ink);
+  transition:border-color .12s,background .12s;text-align:left}
+.opts.three .opt,.opts.four .opt{justify-content:center;gap:11px;padding:14px 10px;font-size:15px}
+.opt .dot{width:19px;height:19px;border:1.5px solid var(--ruleS);border-radius:50%;flex-shrink:0;background:#fff}
+.opt:hover{border-color:var(--muted)}
+.opt.sel{background:var(--accentS);border-color:var(--accent);border-width:1.5px;font-weight:500}
+.opt.sel .dot{border:5px solid var(--accent)}
+.opt.big{font-family:var(--serif);font-size:20px}
+
+.rail{position:relative;padding:0 2px}
+.rail .line{position:absolute;left:7.143%;right:7.143%;top:10px;height:1px;background:var(--ruleS)}
+.rail .pts{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.rail .cellp{display:flex;justify-content:center;padding:14px 0;margin:-14px 0;cursor:pointer}
+.rail .c{width:22px;height:22px;border:2px solid var(--ruleS);border-radius:50%;background:#fff;transition:border .12s}
+.rail .cellp:hover .c{border-color:var(--muted)}
+.rail .cellp.sel .c{border:5px solid var(--accent)}
+.anchors{display:grid;grid-template-columns:1fr auto 1fr;margin-top:15px;font-size:15px;line-height:1.35;font-weight:600}
+.anchors .l{text-align:left;color:var(--false)}
+.anchors .m{text-align:center;color:var(--muted);font-weight:500}
+.anchors .r{text-align:right;color:var(--true)}
+
+/* instructions screen: +20% type */
+.instr h1{font-size:35px;margin-bottom:22px}
+.instr p{font-size:18.5px;line-height:1.66;margin-bottom:19px}
+.instr ol{margin:0 0 22px 24px}
+.instr li{font-size:18.5px;line-height:1.66;margin-bottom:11px}
+.instr .hint{font-size:16px}
+
+label.f{display:block;font-size:14px;font-weight:500;color:var(--ink);margin-bottom:9px}
+input[type=number],textarea{width:100%;font-family:var(--sans);font-size:15.5px;color:var(--ink);background:var(--card);
+  border:1px solid var(--ruleS);border-radius:8px;padding:13px 15px;outline:none}
+input:focus,textarea:focus{border-color:var(--accent)}
+textarea{min-height:88px;resize:vertical;line-height:1.6}
+.field{margin-bottom:24px}
+
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:30px;gap:16px;min-height:50px}
+button.go{font-family:var(--sans);font-size:14.5px;font-weight:500;color:var(--paper);background:var(--ink);
+  border:1px solid var(--ink);border-radius:6px;padding:14px 32px;cursor:pointer;transition:opacity .12s}
+button.go:hover{opacity:.88}
+button.go[disabled]{background:var(--paper);color:var(--muted);border-color:var(--ruleS);cursor:not-allowed;opacity:1}
+.err{font-size:13.5px;color:oklch(0.48 0.14 28);min-height:19px}
+.code{font-family:ui-monospace,Menlo,monospace;font-size:24px;font-weight:600;letter-spacing:.1em;color:var(--ink);
+  background:var(--card);border:1px solid var(--ruleS);border-radius:8px;padding:18px 26px;display:inline-block;margin:6px 0 20px}
+
+/* timed reveal */
+.reveal{opacity:0;pointer-events:none;transition:opacity .45s ease}
+.reveal.show{opacity:1;pointer-events:auto}
+.hint{font-size:13.5px;color:var(--muted);text-align:center;padding:10px 0;transition:opacity .35s}
+.hint.gone{opacity:0}
+
+#gate,#loading{display:none;position:fixed;inset:0;background:var(--paper);z-index:50;align-items:center;justify-content:center;padding:32px}
+#gate .in,#loading .in{max-width:440px;text-align:center}
+.spin{width:22px;height:22px;border:2px solid var(--rule);border-top-color:var(--muted);border-radius:50%;
+  margin:0 auto 16px;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (max-width:700px){.opts.two,.opts.three,.opts.four{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="loading"><div class="in"><div class="spin"></div><p class="small">Preparing your session&hellip;</p></div></div>
+
+<div id="gate"><div class="in">
+  <h1>Please use a desktop or laptop</h1>
+  <p>This study presents material that does not display correctly on a phone or tablet. Please reopen the link on a computer, or return the submission so someone else can take it.</p>
+</div></div>
+
+<div class="topbar"><div class="step" id="stepLabel"></div><div class="bars" id="bars"></div></div>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============================ CONFIG ============================ */
+const CFG = {
+  SUPABASE_URL: "https://uwrgeizwyybwtzwztrln.supabase.co",
+  SUPABASE_KEY: "sb_publishable_L7a-Ve4_pt-A3MkqNpaMqg_bU5wMoxd",
+  STUDY_ID: "s1b",
+  COMPLETION_CODE: "CEKK0PFF",
+  COMPLETION_URL: "https://app.prolific.com/submissions/complete?cc=CEKK0PFF",
+  READ_MS: 5000,               // headline dwell before the first question appears
+  INSTRUCTIONS_MS: 5000,       // delay before Continue appears on the instructions page
+  MIN_WIDTH: 900
+};
+
+const HEADLINES = {
+  redbull: { img:"img/redbull.jpg",
+    text:"Law-enforcement agents have found that Red Bull and Bang energy drinks test positive for various illicit or prescription drugs in substance or urine tests." },
+  thermostat: { img:"img/thermostat.jpg",
+    text:"It has been discovered that power companies can automatically raise the temperature of people's thermostats without their permission." },
+  alexa: { img:"img/alexa.jpg",
+    text:"Hackers have been able to steal the entire database of Amazon's voice assistant, Alexa, gaining access to millions of private conversations of customers." }
+};
+
+/* ============================ STATE ============================ */
+const qs = new URLSearchParams(location.search);
+// Prolific appends PROLIFIC_PID / STUDY_ID / SESSION_ID. Match case-insensitively and
+// accept the usual aliases, so a casing change on their side cannot silently orphan the data.
+function param(){
+  for(const re of arguments){
+    for(const [k,v] of qs.entries()){ if(re.test(k) && v && v.trim()) return v.trim(); }
+  }
+  return null;
+}
+const URL_PID     = param(/^prolific[_-]?pid$/i, /^participant[_-]?id$/i, /^pid$/i);
+const PID         = URL_PID || ("test_" + Math.random().toString(36).slice(2,10));
+const SESSION     = param(/^session[_-]?id$/i, /^session$/i);
+const PROLIFIC_SD = param(/^study[_-]?id$/i);
+const PID_SOURCE  = URL_PID ? "url" : "generated";
+const IS_TEST     = !URL_PID || PID.startsWith("test_");
+
+const S = { condition:null, headline_id:null, label_order:null,
+            d:{}, pageMs:{}, blur:0, t0:Date.now(), tScreen:Date.now() };
+addEventListener("blur", ()=>S.blur++);
+
+/* ============================ BACKEND ============================ */
+async function rpc(fn, body){
+  const r = await fetch(CFG.SUPABASE_URL + "/rest/v1/rpc/" + fn, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", apikey:CFG.SUPABASE_KEY, Authorization:"Bearer "+CFG.SUPABASE_KEY },
+    body: JSON.stringify(body)
+  });
+  if(!r.ok) throw new Error(fn + " " + r.status);
+  const t = await r.text();
+  return t ? JSON.parse(t) : null;
+}
+const logEvent = (kind, detail) =>
+  rpc("log_event", {p_study:CFG.STUDY_ID, p_pid:PID, p_kind:kind, p_detail:detail||{}}).catch(()=>{});
+
+/* ============================ HELPERS ============================ */
+const el = id => document.getElementById(id);
+const app = el("app");
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function markTime(name){
+  const now = Date.now();
+  S.pageMs[name] = (S.pageMs[name]||0) + (now - S.tScreen);
+  S.tScreen = now;
+}
+const TOTAL = 7;
+function progress(i){
+  el("stepLabel").textContent = i>0 ? ("Step " + i + " of " + TOTAL) : "";
+  el("bars").innerHTML = i>0 ? Array.from({length:TOTAL},(_,k)=>'<i class="'+(k<i?"on":"")+'"></i>').join("") : "";
+}
+function render(html, cls){ app.className = "wrap" + (cls ? " " + cls : ""); app.innerHTML = html; window.scrollTo(0,0); }
+
+function optionGroup(container, onPick){
+  container.querySelectorAll("[data-v]").forEach(node=>{
+    node.addEventListener("click", ()=>{
+      container.querySelectorAll("[data-v]").forEach(n=>n.classList.remove("sel"));
+      node.classList.add("sel");
+      onPick(node.dataset.v);
+    });
+  });
+}
+const railHTML = (id, left, mid, right) => `
+  <div class="rail" id="${id}">
+    <div class="line"></div>
+    <div class="pts">${[1,2,3,4,5,6,7].map(v=>'<div class="cellp" data-v="'+v+'"><span class="c"></span></div>').join("")}</div>
+    <div class="anchors"><div class="l">${left}</div><div class="m">${mid}</div><div class="r">${right}</div></div>
+  </div>`;
+
+function stimulusHTML(){
+  const h = HEADLINES[S.headline_id];
+  let out = '<figure><img src="'+h.img+'" alt=""><figcaption>'+esc(h.text)+'</figcaption></figure>';
+  if(S.condition === "both"){
+    const person = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '
+      + 'stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);flex-shrink:0">'
+      + '<circle cx="12" cy="8" r="4"></circle><path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path></svg>';
+    const row = v => '<div class="lrow">'+person+'<div class="t">Labeled by another Prolific participant as</div><div class="chip">'+v+'</div></div>';
+    const order = S.label_order === "fake_first" ? ["Fake","True"] : ["True","Fake"];
+    out += '<div class="labels">'+row(order[0])+row(order[1])+'</div>';
+  }
+  return out;
+}
+
+/* ============================ SCREENS ============================ */
+function scConsent(){
+  progress(1);
+  render(`
+    <h1>Consent to take part in research</h1>
+    <p>You are invited to take part in a short research study about how people evaluate news headlines. The study takes about four minutes.</p>
+    <p><strong>What you will do.</strong> You will read a news headline and answer a few questions about it, followed by two brief demographic questions.</p>
+    <p><strong>Risks and benefits.</strong> There are no risks beyond those of everyday computer use. The study does not benefit you directly.</p>
+    <p><strong>Your data.</strong> We record your responses, your Prolific ID, and basic technical information about your browser. Your Prolific ID is used only to pay you and to prevent duplicate participation, and is removed before the data are analysed or shared. We do not collect your name, your email address, or your IP address.</p>
+    <p><strong>Voluntary participation.</strong> You may stop at any time by closing this page. Payment for a completed submission is handled through Prolific.</p>
+    <p class="small">This study is being run by academic researchers. Questions can be sent through Prolific's messaging system.</p>
+    <hr>
+    <p class="lead">By clicking below you confirm that you are 18 or older, that you have read the above, and that you agree to take part.</p>
+    <div class="foot"><span class="err"></span><button class="go" id="next">I agree &mdash; begin</button></div>
+  `);
+  el("next").onclick = ()=>{ markTime("consent"); logEvent("consent"); scAttention(); };
+}
+
+function scAttention(){
+  progress(2);
+  const words = ["Rock","Car","Stove","Guitar","Shoe","Painting","Dog","Clock"];
+  render(`
+    <h1>Before we begin</h1>
+    <p>In today's study, you will be asked to respond to a variety of different questions. It's important that you pay close attention and read all directions carefully.</p>
+    <div class="q">
+      <div class="stem">To indicate that you're able to read and understand directions, please select the word below that describes something that you use to cook.</div>
+      <div class="opts four" id="g">${words.map(w=>'<div class="opt" data-v="'+w+'"><span class="dot"></span>'+w+'</div>').join("")}</div>
+    </div>
+    <div class="foot"><span class="err"></span><button class="go" id="next" disabled>Continue</button></div>
+  `);
+  let pick=null;
+  optionGroup(el("g"), v=>{ pick=v; el("next").disabled=false; });
+  el("next").onclick = ()=>{
+    S.d.attention_answer = pick;
+    S.d.attention_pass = (pick === "Stove");
+    markTime("attention");
+    logEvent("attention", {pass:S.d.attention_pass});
+    scInstructions();
+  };
+}
+
+function scInstructions(){
+  progress(3);
+  const both = S.condition === "both";
+  render(`
+    <h1>Instructions</h1>
+    <p>Welcome and thank you for participating in our study. We are researching the effectiveness of crowdsourcing for fact-checking news headlines.</p>
+    <p>${both
+      ? "Your task is to evaluate the accuracy of a news headline <strong>irrespective of previous labels given by other Prolific participants</strong>, which will be shown below the headline."
+      : "Your task is to evaluate the accuracy of a news headline."}</p>
+    <ol>
+      <li>You will be shown a news headline that circulated widely on the internet.</li>
+      ${both ? "<li>You will be shown the labels provided by two previous Prolific participants.</li>" : ""}
+      <li>Based on your own knowledge and judgment, you will assess the accuracy of the claim in the headline.</li>
+    </ol>
+    <div class="hint" id="hint">Please read the instructions before continuing.</div>
+    <div class="foot"><span class="err"></span><span class="reveal" id="rv"><button class="go" id="next">Continue</button></span></div>
+  `, "instr");
+  setTimeout(()=>{ el("rv").classList.add("show"); el("hint").classList.add("gone"); }, CFG.INSTRUCTIONS_MS);
+  el("next").onclick = ()=>{ markTime("instructions"); scScale(); };
+}
+
+/* --- Screen 4: headline, timed reveal, then the graded true/false scale --- */
+function scScale(){
+  progress(4);
+  render(`
+    ${stimulusHTML()}
+    <div class="hint" id="hint">Please read the headline carefully.</div>
+    <div class="reveal" id="rv">
+      <hr>
+      <div class="q">
+        <div class="stem">Based on your own knowledge and judgment, how true or false do you think the claim in this headline is?</div>
+        ${railHTML("gA","Definitely false","Unsure","Definitely true")}
+      </div>
+      <div class="foot"><span class="err"></span><button class="go" id="next" disabled>Continue</button></div>
+    </div>
+  `);
+  const tShown = Date.now();
+  setTimeout(()=>{ el("rv").classList.add("show"); el("hint").classList.add("gone"); }, CFG.READ_MS);
+  let a=null;
+  optionGroup(el("gA"), v=>{ a=Number(v); el("next").disabled=false; });
+  el("next").onclick = ()=>{
+    S.d.graded_tf = a;
+    S.d.read_ms = Date.now() - tShown;
+    markTime("scale");
+    logEvent("scale_done", {graded_tf:a});
+    scBinary();
+  };
+}
+
+/* --- Screen 5: same headline, binary; sureness appears once answered --- */
+function scBinary(){
+  progress(5);
+  const strength = ["Slightly","Somewhat","Quite","Completely"];
+  render(`
+    ${stimulusHTML()}
+    <hr>
+    <div class="q">
+      <div class="stem">If you had to pick a side, would you say the claim in this headline is true or fake?</div>
+      <div class="opts two" id="gB">
+        <div class="opt big" data-v="0"><span class="dot"></span>Fake</div>
+        <div class="opt big" data-v="1"><span class="dot"></span>True</div>
+      </div>
+    </div>
+    <div class="reveal" id="rv">
+      <div class="q">
+        <div class="stem" id="sureStem"></div>
+        <div class="opts four" id="gC">
+          ${strength.map((s,i)=>'<div class="opt" data-v="'+(i+1)+'"><span class="dot"></span>'+s+'</div>').join("")}
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span class="err"></span><button class="go" id="next" disabled>Continue</button></div>
+  `);
+  let b=null, c=null;
+  optionGroup(el("gB"), v=>{
+    b = Number(v);
+    el("sureStem").textContent = "How sure are you that the claim is " + (b===1 ? "true" : "fake") + "?";
+    el("rv").classList.add("show");
+    c = null;
+    el("gC").querySelectorAll("[data-v]").forEach(n=>n.classList.remove("sel"));
+    el("next").disabled = true;
+  });
+  optionGroup(el("gC"), v=>{ c=Number(v); el("next").disabled = (b===null); });
+  el("next").onclick = ()=>{
+    S.d.binary_true = b;
+    S.d.sureness = c;
+    S.d.signed_belief = (b===1 ? c : -c);
+    markTime("binary");
+    logEvent("binary_done", {binary_true:b, sureness:c});
+    scSeen();
+  };
+}
+
+/* --- Screen 6: prior exposure --- */
+function scSeen(){
+  progress(6);
+  render(`
+    ${stimulusHTML()}
+    <hr>
+    <div class="q">
+      <div class="stem">Have you seen or heard this claim before today?</div>
+      <div class="opts three" id="gS">
+        <div class="opt" data-v="yes"><span class="dot"></span>Yes</div>
+        <div class="opt" data-v="no"><span class="dot"></span>No</div>
+        <div class="opt" data-v="unsure"><span class="dot"></span>Not sure</div>
+      </div>
+    </div>
+    <div class="foot"><span class="err"></span><button class="go" id="next" disabled>Continue</button></div>
+  `);
+  let s=null;
+  optionGroup(el("gS"), v=>{ s=v; el("next").disabled=false; });
+  el("next").onclick = ()=>{ S.d.seen_before = s; markTime("seen"); scDemo(); };
+}
+
+/* --- Screen 7: demographics --- */
+function scDemo(){
+  progress(7);
+  render(`
+    <h1>Two last questions</h1>
+    <div class="field">
+      <label class="f" for="age">What is your age?</label>
+      <input type="number" id="age" min="18" max="110" inputmode="numeric" placeholder="Years">
+    </div>
+    <div class="field">
+      <label class="f">What is your gender?</label>
+      <div class="opts three" id="gG">
+        <div class="opt" data-v="male"><span class="dot"></span>Male</div>
+        <div class="opt" data-v="female"><span class="dot"></span>Female</div>
+        <div class="opt" data-v="other"><span class="dot"></span>Other</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="f" for="cm">Do you have any comments or suggestions? (optional)</label>
+      <textarea id="cm" placeholder="Optional"></textarea>
+    </div>
+    <div class="foot"><span class="err" id="e"></span><button class="go" id="next" disabled>Finish</button></div>
+  `);
+  let g=null; const age = el("age");
+  const check = ()=>{ el("next").disabled = !(g && age.value.trim()); };
+  optionGroup(el("gG"), v=>{ g=v; check(); });
+  age.addEventListener("input", check);
+  el("next").onclick = async ()=>{
+    S.d.age = parseInt(age.value,10) || null;
+    S.d.gender = g;
+    S.d.comments = el("cm").value.trim();
+    markTime("demographics");
+    el("next").disabled = true; el("next").textContent = "Saving…";
+    try{
+      await rpc("submit", {
+        p_study: CFG.STUDY_ID, p_pid: PID, p_data: S.d,
+        p_paradata: {
+          duration_ms: Date.now() - S.t0, page_ms: S.pageMs, blur_count: S.blur,
+          user_agent: navigator.userAgent, screen: screen.width+"x"+screen.height,
+          viewport: innerWidth+"x"+innerHeight, touch:("ontouchstart" in window), is_test: IS_TEST,
+          pid_source: PID_SOURCE, prolific_study_id: PROLIFIC_SD, entry_url: location.search
+        }
+      });
+      scDone();
+    }catch(err){
+      el("e").textContent = "Could not save — please click Finish again.";
+      el("next").disabled = false; el("next").textContent = "Finish";
+      logEvent("submit_failed", {});
+    }
+  };
+}
+
+function scDone(){
+  progress(0);
+  const hasUrl = !!CFG.COMPLETION_URL;
+  render(`
+    <h1>Thank you — you're finished</h1>
+    <p class="tight">Your completion code:</p>
+    <div class="code">${CFG.COMPLETION_CODE}</div>
+    ${hasUrl
+      ? `<p>You will be returned to Prolific automatically in a moment. If nothing happens, use the button below.</p>
+         <div class="foot"><span></span><button class="go" id="back">Return to Prolific</button></div>`
+      : `<p class="small">Please paste this code into Prolific to confirm your submission. You may now close this window.</p>`}
+  `);
+  logEvent("complete");
+  if(hasUrl){
+    el("back").onclick = ()=>{ location.href = CFG.COMPLETION_URL; };
+    setTimeout(()=>{ location.href = CFG.COMPLETION_URL; }, 3000);
+  }
+}
+
+/* ============================ BOOT ============================ */
+const isSmall = () => innerWidth < CFG.MIN_WIDTH ||
+  ((("ontouchstart" in window) || navigator.maxTouchPoints > 1) && innerWidth < 1024);
+
+(async function boot(){
+  if(isSmall()){
+    el("gate").style.display = "flex";
+    document.querySelector(".topbar").style.display = "none";
+    rpc("log_event", {p_study:CFG.STUDY_ID, p_pid:PID, p_kind:"screenout_device",
+      p_detail:{w:innerWidth, ua:navigator.userAgent}}).catch(()=>{});
+    return;
+  }
+  el("loading").style.display = "flex";
+  try{
+    const a = await rpc("assign", {
+      p_study: CFG.STUDY_ID, p_pid: PID, p_session: SESSION,
+      p_meta: {ua:navigator.userAgent, screen:screen.width+"x"+screen.height, is_test:IS_TEST,
+               pid_source:PID_SOURCE, prolific_study_id:PROLIFIC_SD}
+    });
+    S.condition   = a.factors.condition;
+    S.headline_id = a.factors.headline_id;
+    S.label_order = a.factors.label_order || null;
+    new Image().src = HEADLINES[S.headline_id].img;
+  }catch(err){
+    el("loading").innerHTML = '<div class="in"><h1>This study is not available</h1>'
+      + '<p>We could not start a session. Please return your submission on Prolific so it is not counted against you.</p></div>';
+    return;
+  }
+  el("loading").style.display = "none";
+  S.tScreen = Date.now();
+  scConsent();
+})();
+</script>
+</body>
+</html>
