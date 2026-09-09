@@ -1,5 +1,5 @@
 /* =====================================================================
-   Disconfirming but Convincing — Facial Roller Study (4 cells)
+   Consumer Opinion Studies — Facial Roller Study (4 cells)
    Configuration: endpoints, stimulus copy, and source branding.
    Everything a researcher would want to edit lives in this file.
    ===================================================================== */

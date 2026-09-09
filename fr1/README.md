@@ -3,7 +3,7 @@
 Modified replication of Study 4 in *Disconfirming but Convincing*, with a fourth cell the
 manuscript does not contain. **One dependent variable.**
 
-**Live:** https://terryresearch.github.io/disconfirming-but-convincing/fr1/
+**Live:** https://terryresearch.github.io/consumer-opinion-studies/fr1/
 
 ## Design
 
@@ -51,7 +51,7 @@ Exclude pilot rows with `where not is_test`.
 
 ## Recruitment
 
-    https://terryresearch.github.io/disconfirming-but-convincing/fr1/?PROLIFIC_PID={{%PROLIFIC_PID%}}&STUDY_ID={{%STUDY_ID%}}&SESSION_ID={{%SESSION_ID%}}
+    https://terryresearch.github.io/consumer-opinion-studies/fr1/?PROLIFIC_PID={{%PROLIFIC_PID%}}&STUDY_ID={{%STUDY_ID%}}&SESSION_ID={{%SESSION_ID%}}
 
 Append `&test=1` to flag a row as a pilot. On finish, participants see the debrief and are
 returned to Prolific after 12 seconds (button to go now; code `CEKK0PFF` shown as fallback).

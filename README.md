@@ -5,8 +5,8 @@ Objectivity*. One folder per study; one shared Supabase backend.
 
 | study | what it is | live page |
 |---|---|---|
-| `s1b` | news headlines with peer TRUE / FAKE labels (Study 1) | [`/s1b/`](https://terryresearch.github.io/disconfirming-but-convincing/s1b/) |
-| `fr1` | facial rollers, four verdict conditions, one DV | [`/fr1/`](https://terryresearch.github.io/disconfirming-but-convincing/fr1/) |
+| `s1b` | news headlines with peer TRUE / FAKE labels (Study 1) | [`/s1b/`](https://terryresearch.github.io/consumer-opinion-studies/s1b/) |
+| `fr1` | facial rollers, four verdict conditions, one DV | [`/fr1/`](https://terryresearch.github.io/consumer-opinion-studies/fr1/) |
 
 ## Backend
 

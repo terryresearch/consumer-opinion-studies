@@ -1,5 +1,5 @@
 /* =====================================================================
-   Disconfirming but Convincing — Facial Roller Study
+   Consumer Opinion Studies — Facial Roller Study
    Flow: consent -> article -> measures (split view) -> demographics -> done
    ===================================================================== */
 
