@@ -1,7 +1,8 @@
-# Disconfirming but Convincing
+# Consumer opinion studies
 
-Online studies for the paper *Disconfirming but Convincing: Deviations from the Norm Signal
-Objectivity*. One folder per study; one shared Supabase backend.
+Online studies for the DbC working paper. One folder per study; one shared Supabase backend.
+The repository and every participant-facing page are deliberately named so that the paper's
+title and hypothesis never appear in a URL or on screen.
 
 | study | what it is | live page |
 |---|---|---|
