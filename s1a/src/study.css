@@ -127,7 +127,9 @@ strong{ font-weight:650; color:var(--ink); }
   padding:clamp(28px,4vh,56px) clamp(24px,3.4vw,52px) 72px;
   display:flex; justify-content:flex-start;
 }
-.pane-measure > .measure-inner{ width:100%; max-width:520px; }
+/* A fixed column, so every question's slider is the same width however long
+   its prompt is. 560px keeps the belief question on one line. */
+.pane-measure > .measure{ width:100%; max-width:560px; }
 
 /* =====================  THE ARTICLE  ================================ */
 .article{ animation:rise .5s var(--ease) both; }
@@ -261,7 +263,13 @@ strong{ font-weight:650; color:var(--ink); }
 }
 
 /* =====================  MEASURES  =================================== */
-.measure{ animation:rise .38s var(--ease) both; }
+/* All measures share one screen: each question is a block added beneath the
+   last, and answered blocks stay in place, locked and greyed. */
+.measure-block{ animation:rise .38s var(--ease) both; }
+.measure-block + .measure-block{ margin-top:30px; padding-top:28px; border-top:1px solid var(--rule); }
+/* animation:none releases the entrance animation's held opacity so the fade applies */
+.measure-block.is-done{ animation:none; opacity:.5; filter:grayscale(1); pointer-events:none; user-select:none; }
+.measure-block.is-done .measure-help{ display:none; }
 
 .progress{
   display:flex; align-items:center; gap:12px; margin-bottom:26px;
@@ -541,7 +549,7 @@ select{ appearance:none; background-image:
     padding:24px 20px 28px; justify-content:center;
   }
   .pane-measure{ padding:26px 20px 80px; justify-content:center; }
-  .pane-stimulus > .article, .pane-measure > .measure-inner{ max-width:560px; }
+  .pane-stimulus > .article{ max-width:560px; }
   .article-headline{ font-size:22px; }
   .measure-prompt{ font-size:17.5px; }
   .semdiff-row, .semdiff-scale{ grid-template-columns:minmax(60px,1fr) auto minmax(60px,1fr); gap:8px; }

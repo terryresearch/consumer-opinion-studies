@@ -297,17 +297,27 @@
     const m = S.queue[S.idx];
     const pane = $("#measure-pane");
 
+    /* All measures share one screen. The column (progress, eyebrow, fixed
+       width) is built with the first question; each question is a block
+       appended beneath the last. Answered blocks stay on screen, locked and
+       greyed, and every slider keeps the column's width. */
+    let stack = $(".measure-stack", pane);
+    if (!stack) {
+      const col = el("div", "measure");
+      col.innerHTML = `
+        <div class="progress">
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <div class="progress-count"></div>
+        </div>`;
+      if (m.eyebrow) col.appendChild(el("div", "eyebrow", m.eyebrow));
+      stack = el("div", "measure-stack");
+      col.appendChild(stack);
+      pane.innerHTML = "";
+      pane.appendChild(col);
+      pane.scrollTop = 0;
+    }
 
-    const wrap = el("div", "measure");
-
-    /* progress */
-    const prog = el("div", "progress");
-    prog.innerHTML = `
-      <div class="progress-track"><div class="progress-fill"></div></div>
-      <div class="progress-count">${S.idx + 1} of ${totalSteps()}</div>`;
-    wrap.appendChild(prog);
-
-    if (m.eyebrow) wrap.appendChild(el("div", "eyebrow", m.eyebrow));
+    const wrap = el("section", "measure-block");
     wrap.appendChild(el("h2", "measure-prompt", fillTokens(m.prompt)));
     if (m.help) wrap.appendChild(el("p", "measure-help", m.help));
 
@@ -341,11 +351,15 @@
     else if (m.type === "choice")    buildChoice(body, m, state, refresh);
     else if (m.type === "textarea")  buildTextarea(body, m, state, refresh);
 
-    pane.innerHTML = "";
-    pane.appendChild(wrap);
-    pane.scrollTop = 0;
-    requestAnimationFrame(() => { $(".progress-fill", wrap).style.width =
+    stack.appendChild(wrap);
+    $(".progress-count", pane).textContent = `${S.idx + 1} of ${totalSteps()}`;
+    requestAnimationFrame(() => { $(".progress-fill", pane).style.width =
       ((S.idx + 1) / totalSteps() * 100) + "%"; });
+    if (S.idx > 0) {
+      /* bring the new question into view without scrolling past the answered ones */
+      const motion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      requestAnimationFrame(() => wrap.scrollIntoView({ block: "nearest", behavior: motion ? "smooth" : "auto" }));
+    }
 
     S.screenEnteredAt = Date.now();
 
@@ -366,6 +380,16 @@
         p_kind: "page",
         p_detail: { measure: m.id, index: S.idx, ms: S.timings["t_" + m.id] }
       }).catch(e => console.warn("log_event", e));
+
+      /* lock the answered question in place, greyed, before the next appears */
+      wrap.classList.add("is-done");
+      btnRow.remove();
+      err.remove();
+      wrap.querySelectorAll("input, textarea, select").forEach(n => { n.disabled = true; });
+      wrap.querySelectorAll("[tabindex]").forEach(n => {
+        n.removeAttribute("tabindex");
+        n.setAttribute("aria-disabled", "true");
+      });
 
       S.idx += 1;
       if (S.idx < S.queue.length) renderMeasure();
@@ -780,11 +804,41 @@
   }
 
   /* =====================================================================
-     boot
+     boot — desktop and laptop only
+     Phones and tablets are turned away before consent, so they are never
+     assigned to a condition. Prolific's device filter is advisory; this is
+     the gate that holds. A narrow window on a computer is not blocked.
      ===================================================================== */
+  function isPhoneOrTablet() {
+    const ua = navigator.userAgent || "";
+    const touch = (navigator.maxTouchPoints || 0) > 0;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    return (navigator.userAgentData && navigator.userAgentData.mobile === true)
+        || /Mobi|Android|iPhone|iPad|iPod/i.test(ua)
+        || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)   // iPadOS presents itself as a Mac
+        || (coarse && touch);                                      // touch-first, e.g. a phone in "desktop site" mode
+  }
+
+  function blockDevice() {
+    show("screen-device");
+    const q = new URLSearchParams(location.search);
+    rpc("log_event", {
+      p_study: CONFIG.studyId,
+      p_pid: q.get("PROLIFIC_PID") || q.get("participant_id") || null,
+      p_kind: "blocked_device",
+      p_detail: {
+        ua: navigator.userAgent.slice(0, 200),
+        touch_points: navigator.maxTouchPoints || 0,
+        pointer_coarse: window.matchMedia("(pointer: coarse)").matches,
+        uadata_mobile: navigator.userAgentData ? navigator.userAgentData.mobile : null
+      }
+    }).catch(e => console.warn("log_event", e));
+  }
+
   window.addEventListener("blur", () => { S.blurCount += 1; });
 
   document.addEventListener("DOMContentLoaded", () => {
+    if (isPhoneOrTablet()) { blockDevice(); return; }
     $("#done-code").textContent = CONFIG.completionCode;
     $("#photo-credit").innerHTML = STIMULUS.imageCredit || "";
     initConsent();

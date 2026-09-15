@@ -9,8 +9,10 @@ unchanged.
 
 ## Design
 
-Consent → short orientation page → article → three questions, one per screen → four
-demographic items.
+Consent → short orientation page → article → three questions → four demographic items.
+Desktop and laptop computers only: phones and tablets get a "please use a computer" page
+before consent, are never assigned to a condition, and are logged as `blocked_device` in
+`study.events`.
 
 Two cells, between subjects. Every participant reads the same article about facial
 rollers — same headline, same product photo, same manufacturers' claim ("Reduces facial
@@ -29,8 +31,11 @@ These columns describe the mixed cell only.
 
 ## Measures
 
-All three use the same slider with no default thumb position: nothing is recorded until
-the participant clicks or drags, so there is nothing to anchor on.
+The three questions share one screen, beside the article, and appear one at a time: when a
+question is answered and the participant clicks Next, it stays in place, locked and greyed,
+and the next question appears beneath it. All three use the same slider at the same fixed
+width, with no default thumb position: nothing is recorded until the participant clicks or
+drags, so there is nothing to anchor on.
 
 | field | question | scale |
 |---|---|---|
