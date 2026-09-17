@@ -82,6 +82,7 @@
       try {
         await startSession();
         renderArticle();
+        renderIntro();
         show("screen-intro");
       } catch (e) {
         console.error(e);
@@ -102,6 +103,12 @@
     const c = new URLSearchParams(location.search).get("preview");
     return ["control", "mixed"].indexOf(c) !== -1 ? c : null;
   })();
+
+  /* The orientation page tells each condition what its own article contains
+     (STIMULUS.intro). Filled once the condition has been assigned. */
+  function renderIntro() {
+    $("#intro-lede").textContent = STIMULUS.intro[S.condition];
+  }
 
   function initIntro() {
     $("#intro-btn").addEventListener("click", () => {

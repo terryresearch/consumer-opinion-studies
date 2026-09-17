@@ -82,5 +82,15 @@ const STIMULUS = {
     }
   },
 
-  sectionLabelMixed: "Independent product tests"
+  sectionLabelMixed: "Independent product tests",
+
+  /* Orientation page ("What you will be doing"). Each condition is told what
+     its own article contains; this is the only difference between the
+     conditions outside the article itself. */
+  intro: {
+    control:
+      "In a moment you will read a short article about a beauty product and what its manufacturers claim. Please read it carefully, then answer a few questions.",
+    mixed:
+      "In a moment you will read a short article about a beauty product, what its manufacturers claim, and the results of independent product tests by two magazines. Please read it carefully, then answer a few questions."
+  }
 };

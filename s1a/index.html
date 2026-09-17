@@ -665,10 +665,8 @@ select{ appearance:none; background-image:
       <div class="sheet">
         <div class="eyebrow">About this study</div>
         <h1>What you will be doing</h1>
-        <p class="lede" style="margin-top:14px">
-          In a moment you will read a short article about a beauty product, and then
-          answer some questions about it.
-        </p>
+        <!-- filled by study.js from STIMULUS.intro -->
+        <p class="lede" id="intro-lede" style="margin-top:14px"></p>
 
         <div class="divider"></div>
 
@@ -863,7 +861,17 @@ const STIMULUS = {
     }
   },
 
-  sectionLabelMixed: "Independent product tests"
+  sectionLabelMixed: "Independent product tests",
+
+  /* Orientation page ("What you will be doing"). Each condition is told what
+     its own article contains; this is the only difference between the
+     conditions outside the article itself. */
+  intro: {
+    control:
+      "In a moment you will read a short article about a beauty product and what its manufacturers claim. Please read it carefully, then answer a few questions.",
+    mixed:
+      "In a moment you will read a short article about a beauty product, what its manufacturers claim, and the results of independent product tests by two magazines. Please read it carefully, then answer a few questions."
+  }
 };
 
 </script>
@@ -1014,6 +1022,7 @@ const DEMOGRAPHICS = [
       try {
         await startSession();
         renderArticle();
+        renderIntro();
         show("screen-intro");
       } catch (e) {
         console.error(e);
@@ -1034,6 +1043,12 @@ const DEMOGRAPHICS = [
     const c = new URLSearchParams(location.search).get("preview");
     return ["control", "mixed"].indexOf(c) !== -1 ? c : null;
   })();
+
+  /* The orientation page tells each condition what its own article contains
+     (STIMULUS.intro). Filled once the condition has been assigned. */
+  function renderIntro() {
+    $("#intro-lede").textContent = STIMULUS.intro[S.condition];
+  }
 
   function initIntro() {
     $("#intro-btn").addEventListener("click", () => {

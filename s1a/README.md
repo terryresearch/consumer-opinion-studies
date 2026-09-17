@@ -1,9 +1,9 @@
 # s1a — Study 1a: facial rollers, control vs both verdicts
 
-Revision of [`fr1`](../fr1/) for the empirical package: two conditions instead of four, and a
-purchase question after the belief question. Everything else — consent, orientation page,
-article, magazines, verdict cards, demographics, completion — is carried over from `fr1`
-unchanged.
+Revision of [`fr1`](../fr1/) for the empirical package: two conditions instead of four, a
+purchase question after the belief question, and an orientation page that tells each condition
+what its article contains. Everything else — consent, article, magazines, verdict cards,
+demographics, completion — is carried over from `fr1` unchanged.
 
 **Live:** https://terryresearch.github.io/consumer-opinion-studies/s1a/
 
@@ -16,7 +16,7 @@ before consent, are never assigned to a condition, and are logged as `blocked_de
 
 Two cells, between subjects. Every participant reads the same article about facial
 rollers — same headline, same product photo, same manufacturers' claim ("Reduces facial
-puffiness"). The cells differ only in what appears beneath that claim.
+puffiness"). The article differs between cells only in what appears beneath that claim.
 
 | cell | beneath the claim |
 |---|---|
@@ -28,6 +28,14 @@ In `mixed`, which verdict is shown first alternates strictly between participant
 (`name_swap`). Each fictional publication carries its own accent colour (indigo / plum), so
 colour is counterbalanced against verdict; `theme_confirm` / `theme_disconfirm` record it.
 These columns describe the mixed cell only.
+
+Outside the article, the cells differ in one sentence: the orientation page ("What you will be
+doing") tells each cell what its own article contains (`STIMULUS.intro` in `src/config.js`).
+
+| cell | orientation text |
+|---|---|
+| `control` | In a moment you will read a short article about a beauty product and what its manufacturers claim. Please read it carefully, then answer a few questions. |
+| `mixed` | In a moment you will read a short article about a beauty product, what its manufacturers claim, and the results of independent product tests by two magazines. Please read it carefully, then answer a few questions. |
 
 ## Measures
 
