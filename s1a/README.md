@@ -1,7 +1,7 @@
 # s1a — Study 1a: facial rollers, control vs both verdicts
 
-Revision of [`fr1`](../fr1/) for the empirical package: two conditions instead of four, and two
-purchase questions after the belief question. Everything else — consent, orientation page,
+Revision of [`fr1`](../fr1/) for the empirical package: two conditions instead of four, and a
+purchase question after the belief question. Everything else — consent, orientation page,
 article, magazines, verdict cards, demographics, completion — is carried over from `fr1`
 unchanged.
 
@@ -9,7 +9,7 @@ unchanged.
 
 ## Design
 
-Consent → short orientation page → article → three questions → four demographic items.
+Consent → short orientation page → article → two questions → four demographic items.
 Desktop and laptop computers only: phones and tablets get a "please use a computer" page
 before consent, are never assigned to a condition, and are logged as `blocked_device` in
 `study.events`.
@@ -31,17 +31,19 @@ These columns describe the mixed cell only.
 
 ## Measures
 
-The three questions share one screen, beside the article, and appear one at a time: when a
-question is answered and the participant clicks Next, it stays in place, locked and greyed,
-and the next question appears beneath it. All three use the same slider at the same fixed
-width, with no default thumb position: nothing is recorded until the participant clicks or
-drags, so there is nothing to anchor on.
+The two questions share one screen, beside the article, and appear one at a time: when the
+first is answered and the participant clicks Next, it stays in place, locked and greyed, and
+the second appears beneath it. Both use the same slider at the same fixed width, with no
+default thumb position: nothing is recorded until the participant clicks or drags, so there
+is nothing to anchor on.
 
 | field | question | scale |
 |---|---|---|
 | `dv_likelihood` | How likely is it that facial rollers actually reduce facial puffiness? | 0–100, Very unlikely → Very likely |
 | `dv_purchase` | Imagine you wanted to reduce facial puffiness. How likely would you be to purchase a facial roller? | 0–100, Very unlikely → Very likely |
-| `dv_wtp` | Imagine you wanted to reduce facial puffiness. What is the most you would be willing to spend on a facial roller? | $0–$100, whole dollars |
+
+A third question — the most the participant would spend on a facial roller, $0–$100 — was
+removed on 17 Sep 2026, before data collection.
 
 Demographics come after them: age, gender (woman / man / prefer not to say), prior
 facial-roller use, familiarity.
@@ -58,8 +60,8 @@ Supabase → SQL Editor:
     select * from s1a_data;     -- one row per participant, flat
     select * from s1a_balance;  -- assigned vs completed per cell, live
 
-Exclude pilot rows with `where not is_test`. Seconds on each screen are in `page_ms`
-(`article_ms`, `t_likelihood`, `t_purchase`, `t_wtp`, `t_demographics`, all in ms).
+Exclude pilot rows with `where not is_test`. Time on each screen is in `page_ms`
+(`article_ms`, `t_likelihood`, `t_purchase`, `t_demographics`, all in ms).
 
 ## Recruitment
 
@@ -76,7 +78,7 @@ the same completion link as `fr1`. The return fires only after the response is w
     python3 build.py
 
 - `src/config.js`   — endpoints, stimulus copy, magazine names and accents, completion settings
-- `src/measures.js` — the three questions and the demographics block
+- `src/measures.js` — the two questions and the demographics block
 - `src/study.css`, `src/study.js`, `src/index.html`
 
 Localhost only: `?preview=control|mixed` forces a cell and writes nothing (`&swap=1` puts the

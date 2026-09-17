@@ -1,7 +1,7 @@
 # fr1 — facial rollers, four verdict conditions
 
 **Closed 15 Sep 2026** — data collection is complete and `assign` no longer admits new
-participants. The two-condition revision with purchase questions is [`s1a`](../s1a/).
+participants. The two-condition revision with a purchase question is [`s1a`](../s1a/).
 
 Modified replication of Study 4 in *Disconfirming but Convincing*, with a fourth cell the
 manuscript does not contain. **One dependent variable.**

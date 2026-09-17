@@ -303,7 +303,6 @@ strong{ font-weight:650; color:var(--ink); }
   font-variant-numeric:tabular-nums;
 }
 .slider-value .pct{ font-size:18px; font-weight:550; color:var(--accent-line); margin-left:2px; }
-.slider-value .unit{ font-size:18px; font-weight:550; color:var(--accent-line); margin-right:2px; }
 .slider-value .placeholder{ font-size:13.5px; color:var(--ink-4); }
 
 .track-outer{ position:relative; padding:14px 0; cursor:pointer; }

@@ -1,8 +1,8 @@
 /* =====================================================================
    MEASURES
-   Three questions, one per screen, asked in both conditions: belief in
-   the claim, then purchase likelihood and willingness to spend under a
-   goal of reducing facial puffiness. Demographics follow.
+   Two questions, asked one at a time in both conditions: belief in the
+   claim, then purchase likelihood under a goal of reducing facial
+   puffiness. Demographics follow.
    ===================================================================== */
 
 const ALL = ["control", "mixed"];
@@ -36,22 +36,6 @@ const MEASURES = [
     leftLabel: "Very unlikely",
     rightLabel: "Very likely",
     field: "dv_purchase"
-  },
-
-  /* ---------- DV 3: willingness to spend under the goal ($0-100) -----
-     The same 0-100 slider, read out in whole dollars. */
-  {
-    id: "wtp",
-    when: ALL,
-    type: "slider100",
-    eyebrow: "Your judgment",
-    prompt: "Imagine you wanted to reduce facial puffiness. What is the most you would be willing to spend on a facial roller?",
-    help: "Drag the slider, or click anywhere on the line, to answer.",
-    leftLabel: "$0",
-    rightLabel: "$100",
-    prefix: "$",
-    suffix: "",
-    field: "dv_wtp"
   }
 ];
 

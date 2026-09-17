@@ -6,7 +6,7 @@ title and hypothesis never appear in a URL or on screen.
 
 | study | what it is | live page |
 |---|---|---|
-| `s1a` | facial rollers, control vs both verdicts, plus purchase questions (Study 1a) | [`/s1a/`](https://terryresearch.github.io/consumer-opinion-studies/s1a/) |
+| `s1a` | facial rollers, control vs both verdicts, plus purchase likelihood (Study 1a) | [`/s1a/`](https://terryresearch.github.io/consumer-opinion-studies/s1a/) |
 | `s1b` | news headlines with peer TRUE / FAKE labels (Study 1) | [`/s1b/`](https://terryresearch.github.io/consumer-opinion-studies/s1b/) |
 | `fr1` | facial rollers, four verdict conditions, one DV — closed | [`/fr1/`](https://terryresearch.github.io/consumer-opinion-studies/fr1/) |
 

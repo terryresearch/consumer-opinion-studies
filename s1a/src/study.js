@@ -397,12 +397,8 @@
     });
   }
 
-  /* ---------- 0-100 slider, no default position ----------
-     Reads out as a percentage unless the measure sets its own units,
-     e.g. prefix "$" and suffix "" for a dollar amount. */
+  /* ---------- 0-100 slider, no default position ---------- */
   function buildSlider100(host, m, state, refresh) {
-    const prefix = m.prefix || "";
-    const suffix = m.suffix != null ? m.suffix : "%";
     const wrap = el("div", "slider-wrap");
     wrap.innerHTML = `
       <div class="slider-value"><span class="placeholder">Not yet answered</span></div>
@@ -432,12 +428,9 @@
       outer.classList.add("is-engaged");
       fill.style.width = v + "%";
       thumb.style.left = v + "%";
-      read.innerHTML =
-        (prefix ? `<span class="unit">${prefix}</span>` : "") +
-        `<span class="num">${v}</span>` +
-        (suffix ? `<span class="pct">${suffix}</span>` : "");
+      read.innerHTML = `<span class="num">${v}</span><span class="pct">%</span>`;
       outer.setAttribute("aria-valuenow", v);
-      outer.setAttribute("aria-valuetext", prefix + v + suffix);
+      outer.setAttribute("aria-valuetext", v + "%");
       refresh();
     };
 
